@@ -57,6 +57,7 @@ export default {
 
 <style lang="stylus" scoped>
 .kv-container
+  padding 0 20px
   width 100%
   .kv-title
     font-size 20px

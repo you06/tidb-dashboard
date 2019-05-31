@@ -1,6 +1,7 @@
 const axios = require('axios')
 const Cache = require('./cache')
 const Tidb = require('./modules/tidb')
+const PD = require('./modules/pd')
 
 class Store {
   constructor(cluster, cacheTime) {
@@ -11,6 +12,7 @@ class Store {
     })
     this.cache = new Cache(this.cacheTime)
     this.tidb = new Tidb(this.axios, this.cluster.tidb)
+    this.pd = new PD(this.axios, this.cluster.pd)
   }
 
   async fetchData(datastr, ...args) {
@@ -24,10 +26,15 @@ class Store {
       const [ moduleName, key ] = datastr.split('.')
       const module = this[moduleName]
       if (module && module[key]) {
-        const res = await module[key].call(module, ...args)
-        // udpate cache
-        this.cache.setCache(cacheKey, res)
-        return res
+        try {
+          const res = await module[key].call(module, ...args)
+          // udpate cache
+          this.cache.setCache(cacheKey, res)
+          return res
+        } catch(e) {
+          // todo: error log
+          return ''
+        }
       } else {
         return ''
       }

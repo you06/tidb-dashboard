@@ -28,8 +28,8 @@ export default {
           to: '/'
         },
         {
-          text: 'Network',
-          to: '/network'
+          text: 'PD',
+          to: '/pd'
         }
       ]
     }

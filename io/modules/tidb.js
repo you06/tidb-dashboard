@@ -1,11 +1,11 @@
 export default (socket, store) => {
-  socket.on('regions', data => {
+  socket.on('tidb-regions', data => {
     store.commit('tidb/updateRegions', data)
   })
-  socket.on('status', data => {
+  socket.on('tidb-status', data => {
     store.commit('tidb/updateStatus', data)
   })
-  socket.on('allinfo', data => {
+  socket.on('tidb-allinfo', data => {
     store.commit('tidb/updateAllinfo', data)
   })
 }

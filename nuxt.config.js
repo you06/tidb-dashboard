@@ -5,10 +5,7 @@ module.exports = {
 
   env: {
     socket: {
-      protocol: 'http',
-      host: 'localhost',
-      port: process.env.PORT || 4000,
-      mode: 'test'
+      protocol: 'http'
     }
   },
   /*
@@ -39,7 +36,11 @@ module.exports = {
    */
   plugins: [
     '~/plugins/roboto-fontface',
-    '~/io/'
+    '~/plugins/vuetable-2',
+    {
+      src: '~/io/',
+      ssr: false
+    }
   ],
 
   /*

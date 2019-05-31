@@ -23,7 +23,7 @@ async function start() {
 
   const cluster = {
     tidb: JSON.parse(process.env.TIDB || '[]'),
-    tikv: JSON.parse(process.env.TIKV || '[]'),
+    // tikv: JSON.parse(process.env.TIKV || '[]'),
     pd: JSON.parse(process.env.PD || '[]')
   }
   const cacheTime = parseInt(process.env.CACHE_TIME || 1000)

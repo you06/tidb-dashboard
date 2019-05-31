@@ -8,9 +8,8 @@
 docker run \
   -p 3333:3000 \
   -d \
-  -e TIDB=["192.168.0.1"] \
-  -e TIKV=["192.168.0.5", "192.168.0.6"] \
-  -e PD=["192.168.0.10", "192.168.0.11"] \
+  -e TIDB=["http://172.19.0.13:10080"] \
+  -e PD=["http://172.19.0.6:2379", "http://172.19.0.8:2379", "http://172.19.0.4:2379"] \
   -e CACHE_TIME=1000 \
   you06/tidb-dashboard
 ```
@@ -20,3 +19,4 @@ docker run \
 - [x] Server cache
 - [ ] Mobile Support
 - [ ] A Go socket.io server
+- [ ] Server render initial status
