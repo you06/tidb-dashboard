@@ -23,6 +23,10 @@ EXPOSE 3000
 ENV NUXT_HOST=0.0.0.0
 # set app port
 ENV NUXT_PORT=3000
+# set cluster
+ENV TIDB=[]
+ENV TIKV=[]
+ENV PD=[]
 
 # start the app
 CMD [ "npm", "start" ]

@@ -1,19 +1,25 @@
 <template>
   <section class="container">
-    <KV-display :kv="status" class="status-display" />
+    <div class="cluster-display">
+      <ti-table title="TiDB Servers" />
+    </div>
+    <KV-display :kv="status" title="TiDB Status" class="status-display" />
   </section>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import KVDisplay from '@/components/KVDisplay'
+import TiTable from '@/components/TiTable'
 
 export default {
   components: {
-    KVDisplay
+    KVDisplay,
+    TiTable
   },
   computed: mapState({
-    status: state => state.status
+    status: state => state.status,
+    regions: state => state.regions
   })
 }
 </script>
@@ -25,6 +31,8 @@ export default {
   display flex
   justify-content flex-start
   color #fff
+  .cluster-display
+    width 50%
   .status-display
     width 50%
 </style>

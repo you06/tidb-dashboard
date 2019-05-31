@@ -11,6 +11,8 @@ const ioWrapper = require('./socket')
 const config = require('../nuxt.config.js')
 config.dev = !(app.env === 'production')
 
+// console.log(process.env.HOST, process.env.PORT, process.env.TIDB, process.env.TIKV, process.env.PD)
+
 async function start() {
   // Instantiate nuxt.js
   const nuxt = new Nuxt(config)

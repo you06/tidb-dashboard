@@ -7,7 +7,7 @@ module.exports = {
     socket: {
       protocol: 'http',
       host: 'localhost',
-      port: 3000,
+      port: 4000,
       mode: 'test'
     }
   },

@@ -1,5 +1,6 @@
 <template>
   <div class="kv-container">
+    <h2 class="kv-title">{{ title }}</h2>
     <p v-for="(item, key) in store" :key="key" class="kv-line">
       <span class="kv-key">{{ item.k }}: </span>
       <span class="kv-value">
@@ -16,6 +17,10 @@ export default {
     kv: {
       type: [Array, Object],
       default: () => []
+    },
+    title: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -52,6 +57,10 @@ export default {
 
 <style lang="stylus" scoped>
 .kv-container
+  .kv-title
+    font-size 20px
+    font-weight bold
+    margin-bottom 10px
   .kv-line
     height 30px
     line-height 30px
