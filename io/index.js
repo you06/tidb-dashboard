@@ -1,14 +1,15 @@
 import io from 'socket.io-client'
-import statusWrapper from './modules/status'
-import regionsWrapper from './modules/regions'
+import tidbWrapper from './modules/tidb'
 
 export default function({ env, store }) {
   if (process.client) {
     const socket = io(
       `${env.socket.protocol}://${env.socket.host}:${env.socket.port}`
     )
-    statusWrapper(socket, store)
-    regionsWrapper(socket, store)
+
+    socket.on('connect', () => {
+      tidbWrapper(socket, store)
+    })
     store.socket = socket
   }
 }

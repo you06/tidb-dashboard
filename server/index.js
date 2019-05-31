@@ -1,6 +1,7 @@
 const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
+const Store = require('./store')
 
 const app = new Koa()
 const server = require('http').createServer(app.callback())
@@ -11,8 +12,6 @@ const ioWrapper = require('./socket')
 const config = require('../nuxt.config.js')
 config.dev = !(app.env === 'production')
 
-// console.log(process.env.HOST, process.env.PORT, process.env.TIDB, process.env.TIKV, process.env.PD)
-
 async function start() {
   // Instantiate nuxt.js
   const nuxt = new Nuxt(config)
@@ -21,6 +20,15 @@ async function start() {
     host = process.env.HOST || '127.0.0.1',
     port = process.env.PORT || 3000
   } = nuxt.options.server
+
+  const cluster = {
+    tidb: JSON.parse(process.env.TIDB || '[]'),
+    tikv: JSON.parse(process.env.TIKV || '[]'),
+    pd: JSON.parse(process.env.PD || '[]')
+  }
+  const cacheTime = parseInt(process.env.CACHE_TIME || 1000)
+
+  const store = new Store(cluster, cacheTime)
 
   // Build in development
   if (config.dev) {
@@ -37,7 +45,7 @@ async function start() {
     nuxt.render(ctx.req, ctx.res)
   })
 
-  ioWrapper(io)
+  ioWrapper(io, { cluster, store })
 
   server.listen(port, host)
   consola.ready({

@@ -1,9 +1,11 @@
 <template>
   <section class="container">
-    <div class="cluster-display">
+    <div class="left-display">
       <ti-table title="TiDB Servers" />
     </div>
-    <KV-display :kv="status" title="TiDB Status" class="status-display" />
+    <div class="right-display">
+      <KV-display :kv="tidbStatus" title="TiDB Status" />
+    </div>
   </section>
 </template>
 
@@ -18,8 +20,9 @@ export default {
     TiTable
   },
   computed: mapState({
-    status: state => state.status,
-    regions: state => state.regions
+    tidbStatus: state => state.tidb.status,
+    tidbRegions: state => state.tidb.regions,
+    tidbAllinfo: state => state.tidb.allinfo
   })
 }
 </script>
@@ -31,8 +34,8 @@ export default {
   display flex
   justify-content flex-start
   color #fff
-  .cluster-display
+  .left-display
     width 50%
-  .status-display
+  .right-display
     width 50%
 </style>

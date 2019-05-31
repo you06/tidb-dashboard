@@ -27,6 +27,7 @@ ENV NUXT_PORT=3000
 ENV TIDB=[]
 ENV TIKV=[]
 ENV PD=[]
+ENV CACHE_TIME=
 
 # start the app
 CMD [ "npm", "start" ]
