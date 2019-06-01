@@ -19,7 +19,7 @@ docker run \
 
 `dashboard.json` controls backend data fetch and front end data visulization!
 
-```json
+```
 {
   "name": "heap_memory_usage", // name of chart
   "display": "Heap Memory Usage", // friendly name, show as chart title
