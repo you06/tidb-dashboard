@@ -1,6 +1,7 @@
 const tikvWrapper = require('./modules/tikv')
 const tidbWrapper = require('./modules/tidb')
 const pdWrapper = require('./modules/pd')
+const dashboardWrapper = require('./modules/dashboard')
 
 module.exports = (io, opt) => {
   const connections = []
@@ -11,6 +12,7 @@ module.exports = (io, opt) => {
       tikvWrapper(client, opt)
       tidbWrapper(client, opt)
       pdWrapper(client, opt)
+      dashboardWrapper(client, opt)
     }, 3000)
     client.on('disconnect', () => {
       const index = connections.indexOf(client)

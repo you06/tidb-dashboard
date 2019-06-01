@@ -1,9 +1,10 @@
 const urljoin = require('url-join')
 
 class PD {
-  constructor(axios, servers) {
+  constructor(axios, { pd, prometheus }) {
     this.axios = axios
-    this.servers = servers.map(url => urljoin(url, 'pd/api/v1'))
+    this.servers = pd.map(url => urljoin(url, 'pd/api/v1'))
+    this.prometheus = urljoin(prometheus, '/api/v1')
   }
 
   async bootstrapTime() {

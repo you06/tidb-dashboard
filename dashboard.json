@@ -1,0 +1,75 @@
+{
+  "tidb": [
+    {
+      "name": "duration",
+      "display": "duration",
+      "history": 600000,
+      "type": "chart",
+      "rule": "1|float",
+      "rate": 0.001,
+      "unit": "ms",
+      "targets": [
+        {
+          "id": "A",
+          "expr": "histogram_quantile(0.999, sum(rate(tidb_server_handle_query_duration_seconds_bucket[1m])) by (le))",
+          "tag": "999"
+        },
+        {
+          "id": "B",
+          "expr": "histogram_quantile(0.99, sum(rate(tidb_server_handle_query_duration_seconds_bucket[1m])) by (le))",
+          "tag": "99"
+        },
+        {
+          "id": "C",
+          "expr": "histogram_quantile(0.95, sum(rate(tidb_server_handle_query_duration_seconds_bucket[1m])) by (le))",
+          "tag": "95"
+        },
+        {
+          "id": "D",
+          "expr": "histogram_quantile(0.80, sum(rate(tidb_server_handle_query_duration_seconds_bucket[1m])) by (le))",
+          "tag": "80"
+        }
+      ]
+    },
+    {
+      "name": "connections",
+      "display": "connections",
+      "history": 600000,
+      "type": "chart",
+      "rule": "1|int",
+      "targets": [
+        {
+          "id": "A",
+          "expr": "tidb_server_connections",
+          "tag": ""
+        }
+      ]
+    },
+    {
+      "name": "heap_memory_usage",
+      "display": "Heap Memory Usage",
+      "history": 600000,
+      "type": "chart",
+      "rule": "1|int",
+      "rate": 1048576,
+      "unit": "MiB",
+      "targets": [
+        {
+          "id": "A",
+          "expr": "go_memstats_heap_inuse_bytes{job=~\"tidb.*\"}",
+          "tag": "",
+          "children": [
+            {
+              "id": "A-1",
+              "tagKey": "metric.instance"
+            },
+            {
+              "id": "A-2",
+              "tagKey": "metric.instance"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

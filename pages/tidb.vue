@@ -1,15 +1,34 @@
 <template>
   <section class="container">
-    tidb dashboard
+    <div v-for="(item, key) in charts" :key="key" class="chart-container">
+      <h2 class="chart-title">{{ item.display }}</h2>
+      <line-chart
+        :data="$store.state.dashboard.data[`${name}.${item.name}`]"
+        :config="item"
+      />
+    </div>
   </section>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import LineChart from '@/components/LineChart'
+
+const name = 'tidb'
+
 export default {
-  components: {},
+  name: 'TiDB',
+  components: {
+    LineChart
+  },
   data() {
-    return {}
-  }
+    return {
+      name
+    }
+  },
+  computed: mapState({
+    charts: state => state.dashboard.config[name]
+  })
 }
 </script>
 
@@ -18,13 +37,15 @@ export default {
   padding 10px 120px
   margin 0 auto
   color #fff
-  .line-display
-    width 100%
-    display flex
-    justify-content flex-start
-    padding 20px 0
-    .left-display
-      width 50%
-    .right-display
-      width 50%
+  width 100%
+  .chart-container
+    width 50%
+    float left
+    height 450px
+    .chart-title
+      width 100%
+      text-align center
+      color #ccc
+      font-weight normal
+      font-size 20px
 </style>

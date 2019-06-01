@@ -1,4 +1,5 @@
 const pkg = require('./package')
+const dashboard = require('./dashboard')
 
 module.exports = {
   mode: 'spa',
@@ -6,7 +7,8 @@ module.exports = {
   env: {
     socket: {
       protocol: 'http'
-    }
+    },
+    dashboard
   },
   /*
    ** Headers of the page
@@ -39,6 +41,10 @@ module.exports = {
     '~/plugins/vuetable-2',
     {
       src: '~/io/',
+      ssr: false
+    },
+    {
+      src: '~/plugins/dashboard',
       ssr: false
     }
   ],

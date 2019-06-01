@@ -2,17 +2,20 @@ const axios = require('axios')
 const Cache = require('./cache')
 const Tidb = require('./modules/tidb')
 const PD = require('./modules/pd')
+const Prometheus = require('./modules/prometheus')
 
 class Store {
-  constructor(cluster, cacheTime) {
+  constructor(cluster, cacheTime, dashboard) {
     this.cluster = cluster
     this.cacheTime = cacheTime
+    this.dashboard = dashboard
     this.axios = axios.create({
       timeout: 1000
     })
     this.cache = new Cache(this.cacheTime)
-    this.tidb = new Tidb(this.axios, this.cluster.tidb)
-    this.pd = new PD(this.axios, this.cluster.pd)
+    this.tidb = new Tidb(this.axios, this.cluster)
+    this.pd = new PD(this.axios, this.cluster)
+    this.dashboard = new Prometheus(this.cluster.prometheus, dashboard, this.axios)
   }
 
   async fetchData(datastr, ...args) {
@@ -38,6 +41,28 @@ class Store {
       } else {
         return ''
       }
+    }
+  }
+
+  async fetchDashboardHistory(datastr, ...args) {
+    const [ moduleName, key ] = datastr.split('.')
+    try {
+      const res = await this.dashboard.getHistory.call(this.dashboard, moduleName, key)
+      return res
+    } catch(e) {
+      // todo: error log
+      return ''
+    }
+  }
+
+  async fetchDashboard(datastr, ...args) {
+    const [ moduleName, key ] = datastr.split('.')
+    try {
+      const res = await this.dashboard.getData.call(this.dashboard, moduleName, key)
+      return res
+    } catch(e) {
+      // todo: error log
+      return ''
     }
   }
 }

@@ -9,3 +9,10 @@ export const formatDatetime = date => {
   const second = t.getSeconds()
   return `${year}-${month}-${day} ${hour}:${minute}:${second}`
 }
+
+export const formatTime = date => {
+  const t = new Date(date)
+  const hour = t.getHours()
+  const minute = t.getMinutes() < 10 ? '0' + t.getMinutes() : t.getMinutes()
+  return `${hour}:${minute}`
+}

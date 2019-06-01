@@ -23,12 +23,13 @@ async function start() {
 
   const cluster = {
     tidb: JSON.parse(process.env.TIDB || '[]'),
-    // tikv: JSON.parse(process.env.TIKV || '[]'),
-    pd: JSON.parse(process.env.PD || '[]')
+    pd: JSON.parse(process.env.PD || '[]'),
+    prometheus: process.env.PROMETHEUS || ''
   }
   const cacheTime = parseInt(process.env.CACHE_TIME || 1000)
+  const dashboard = config.env.dashboard
 
-  const store = new Store(cluster, cacheTime)
+  const store = new Store(cluster, cacheTime, dashboard)
 
   // Build in development
   if (config.dev) {
@@ -45,7 +46,7 @@ async function start() {
     nuxt.render(ctx.req, ctx.res)
   })
 
-  ioWrapper(io, { cluster, store })
+  ioWrapper(io, { cluster, store, dashboard })
 
   server.listen(port, host)
   consola.ready({

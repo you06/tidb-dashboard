@@ -25,8 +25,8 @@ ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=3000
 # set cluster
 ENV TIDB=[]
-# ENV TIKV=[]
 ENV PD=[]
+ENV PROMETHEUS=
 ENV CACHE_TIME=
 
 # start the app

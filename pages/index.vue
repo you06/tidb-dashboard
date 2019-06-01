@@ -3,6 +3,9 @@
     <!-- TiDB status -->
     <div class="line-display">
       <div class="left-display">
+        <KV-display :kv="tidbStatus" title="TiDB Status" />
+      </div>
+      <div class="right-display">
         <ti-table
           :data="tidbAllinfo"
           :keys="tidbAllinfoKeys"
@@ -10,22 +13,19 @@
           title="TiDB Servers"
         />
       </div>
-      <div class="right-display">
-        <KV-display :kv="tidbStatus" title="TiDB Status" />
-      </div>
     </div>
     <!-- PD status -->
     <div class="line-display">
       <div class="left-display">
+        <KV-display :kv="{ 'boot time': pdBootstrapTime }" title="PD Status" />
+      </div>
+      <div class="right-display">
         <ti-table
           :data="pdMembers"
           :keys="pdMemberKeys"
           :names="pdMemberKeyName"
           title="PD Servers"
         />
-      </div>
-      <div class="right-display">
-        <KV-display :kv="{ 'boot time': pdBootstrapTime }" title="PD Status" />
       </div>
     </div>
   </section>
@@ -39,6 +39,7 @@ import TiTable from '@/components/TiTable'
 import { formatDatetime } from '@/utils/datetime'
 
 export default {
+  name: 'Dashboard',
   components: {
     KVDisplay,
     TiTable
@@ -107,11 +108,20 @@ export default {
   color #fff
   .line-display
     width 100%
-    display flex
-    justify-content flex-start
     padding 20px 0
-    .left-display
-      width 50%
-    .right-display
-      width 50%
+    clear both
+    .left-display, .right-display
+      float right
+    @media screen and (max-width: 1900px)
+      .left-display
+        width 100%
+      .right-display
+        width 100%
+      .left-display, .right-display
+        margin-top 20px
+    @media screen and (min-width: 1900px)
+      .left-display
+        width 50%
+      .right-display
+        width 50%
 </style>
