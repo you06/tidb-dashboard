@@ -6,6 +6,7 @@
         :key="key"
         :text="item.text"
         :to="item.to"
+        :active="item.to === $route.path"
       />
     </div>
     <div class="bottom-decoration" />
@@ -28,8 +29,8 @@ export default {
           to: '/'
         },
         {
-          text: 'PD',
-          to: '/pd'
+          text: 'TiDB',
+          to: '/tidb'
         }
       ]
     }
