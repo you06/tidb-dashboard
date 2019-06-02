@@ -142,6 +142,40 @@
           }
         }
       ]
+    },
+    {
+      "name": "regions",
+      "display": "Regions",
+      "history": 600000,
+      "type": "chart",
+      "rule": "1|int",
+      "targets": [
+        {
+          "id": "A",
+          "expr": "pd_scheduler_store_status{type=\"region_count\"}",
+          "childrenTemplate": {
+            "id": "A-$",
+            "tagKey": "metric.address"
+          }
+        }
+      ]
+    },
+    {
+      "name": "leader",
+      "display": "Leader",
+      "history": 600000,
+      "type": "chart",
+      "rule": "1|int",
+      "targets": [
+        {
+          "id": "A",
+          "expr": "pd_scheduler_store_status{type=\"leader_count\"}",
+          "childrenTemplate": {
+            "id": "A-$",
+            "tagKey": "metric.address"
+          }
+        }
+      ]
     }
   ]
 }

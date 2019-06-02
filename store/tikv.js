@@ -1,12 +1,20 @@
 export const state = () => ({
   status: {
     count: 0,
-    stores: []
+    stores: [],
+    regions: {
+      count: 0,
+      regions: []
+    }
   }
 })
 
 export const mutations = {
   updateStatus(state, status) {
     state.status = status
+  },
+  updateRegions(state, regions) {
+    console.log(regions)
+    state.regions = regions
   }
 }

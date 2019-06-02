@@ -34,6 +34,7 @@ export default {
           yAxes: [
             {
               ticks: {
+                suggestedMin: 0,
                 callback: (value, index, values) => {
                   return value + (this.config.unit || '')
                 }
