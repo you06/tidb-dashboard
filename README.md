@@ -8,6 +8,7 @@
 docker run \
   -p 3333:3000 \
   -d \
+  --network tidb-docker-compose_default \
   -e TIDB="[\"http://172.19.0.13:10080\"]" \
   -e PD="[\"http://172.19.0.6:2379\", \"http://172.19.0.8:2379\", \"http://172.19.0.4:2379\"]" \
   -e PROMETHEUS="http://172.19.0.5:9090" \
