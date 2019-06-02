@@ -71,5 +71,77 @@
         }
       ]
     }
+  ],
+  "pd": [
+    {
+      "name": "current_storage_usage",
+      "display": "Current Storage Usage",
+      "history": 600000,
+      "type": "chart",
+      "rule": "1|int",
+      "rate": 1048576,
+      "unit": "MiB",
+      "targets": [
+        {
+          "id": "A",
+          "expr": "pd_cluster_status{instance=\"$instance\", type=\"storage_size\"}",
+          "tag": "Usage"
+        }
+      ]
+    },
+    {
+      "name": "number_of_regions",
+      "display": "Number of Regions",
+      "history": 600000,
+      "type": "chart",
+      "rule": "1|int",
+      "targets": [
+        {
+          "id": "A",
+          "expr": "sum(pd_cluster_status{instance=\"$instance\",type=\"leader_count\"})",
+          "tag": "Regions"
+        }
+      ]
+    }
+  ],
+  "tikv": [
+    {
+      "name": "cpu_usage",
+      "display": "CPU Usage",
+      "history": 600000,
+      "type": "chart",
+      "rule": "1|float",
+      "rate": 0.01,
+      "unit": "%",
+      "targets": [
+        {
+          "id": "A",
+          "expr": "sum(rate(tikv_thread_cpu_seconds_total{instance=~\".*\"}[1m])) by (instance)",
+          "childrenTemplate": {
+            "id": "A-$",
+            "tagKey": "metric.instance"
+          }
+        }
+      ]
+    },
+    {
+      "name": "memory",
+      "display": "Memory",
+      "history": 600000,
+      "type": "chart",
+      "rule": "1|int",
+      "rate": 1048576,
+      "unit": "MiB",
+      "targets": [
+        {
+          "id": "A",
+          "expr": "avg(process_resident_memory_bytes{instance=~\".*\"}) by (instance)",
+          "childrenTemplate": {
+            "id": "A-$",
+            "tagKey": "metric.instance"
+          }
+        }
+      ]
+    }
   ]
 }

@@ -55,7 +55,16 @@ class Prometheus {
     }
   }
 
-  initFetch() {
+  async initInstance() {
+    this.axios.get(urljoin(this.url, 'query'), {
+      params: { query: 'pd_cluster_status' }
+    }).then(({ data }) => {
+      this.instance = data.data.result[0].metric.instance
+    })
+  }
+
+  async initFetch() {
+    await this.initInstance()
     setInterval(() => {
       for (const moduleName in this.dashboard) {
         const submodule = this.dashboard[moduleName]
@@ -91,10 +100,21 @@ class Prometheus {
     for (const target of item.targets) {
       const { id, expr } = target
       const promise = this.axios.get(urljoin(this.url, 'query'), {
-        params: { query: expr }
+        params: { query: expr.replace('$instance', this.instance) }
       }).then(({ data }) => {
         data.data.result[0].value[0] *= 1000
-        if (target.children) {
+        if (target.childrenTemplate) {
+          for (let i = 0; i < data.data.result.length; i++) {
+            const r = {
+              val: data.data.result[i].value
+            }
+            const { tagKey, res: tag } = this.parseTagKey(target.childrenTemplate.tagKey, data.data.result[i])
+            r[tagKey] = tag
+            const id = target.childrenTemplate.id.replace('$', tag)
+            r.id = id
+            res.push(r)
+          }
+        } else if (target.children) {
           for (let i = 0; i < target.children.length; i++) {
             if (data.data.result[i]) {
               const r = {

@@ -28,6 +28,19 @@
         />
       </div>
     </div>
+    <!-- TiKV status -->
+    <div class="line-display">
+      <div class="left-display">
+        <KV-display :kv="tikvStatus" title="TiKV Status" />
+      </div>
+      <div class="right-display">
+        <ti-table
+          :data="tikvStores"
+          :keys="tikvStoreKeys"
+          title="TiKV Servers"
+        />
+      </div>
+    </div>
   </section>
 </template>
 
@@ -56,7 +69,8 @@ export default {
         member_id: 'id',
         peer_urls: 'peer urls',
         client_urls: 'client urls'
-      }
+      },
+      tikvStoreKeys: ['id', 'address', 'available', 'capacity']
     }
   },
   computed: mapState({
@@ -96,6 +110,24 @@ export default {
         }
       }
       return res
+    },
+    tikvStatus: state => {
+      const status = state.tikv.status
+      const res = {
+        count: status.count
+      }
+      return res
+    },
+    tikvStores: state => {
+      const status = state.tikv.status
+      return status.stores.map(store => {
+        return {
+          id: store.store.id,
+          address: store.store.address,
+          available: store.status.available,
+          capacity: store.status.capacity
+        }
+      })
     }
   })
 }

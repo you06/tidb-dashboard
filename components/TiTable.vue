@@ -44,7 +44,9 @@ export default {
     },
     names: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {}
+      }
     },
     title: {
       type: String,

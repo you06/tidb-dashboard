@@ -16,6 +16,11 @@ class PD {
     const { data } = await this.axios.get(urljoin(this.servers[0], 'members'))
     return data
   }
+
+  async stores() {
+    const { data } = await this.axios.get(urljoin(this.servers[0], 'stores'))
+    return data
+  }
 }
 
 module.exports = PD

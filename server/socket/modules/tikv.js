@@ -1,6 +1,6 @@
-module.exports = (client, { store }) => {
+module.exports = async (client, { store }) => {
 
-  // client.emit('regions', await store.fetchData('tidb.regions'))
+  client.emit('tikv-status', await store.fetchData('pd.stores'))
 
   return client
 }

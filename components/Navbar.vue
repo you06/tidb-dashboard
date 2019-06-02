@@ -31,6 +31,14 @@ export default {
         {
           text: 'TiDB',
           to: '/tidb'
+        },
+        {
+          text: 'PD',
+          to: '/pd'
+        },
+        {
+          text: 'TiKV',
+          to: '/tikv'
         }
       ]
     }
