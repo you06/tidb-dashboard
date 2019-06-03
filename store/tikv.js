@@ -14,7 +14,6 @@ export const mutations = {
     state.status = status
   },
   updateRegions(state, regions) {
-    console.log(regions)
     state.regions = regions
   }
 }
