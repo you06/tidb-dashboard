@@ -158,7 +158,7 @@ export default {
           }
           return res
         })
-        .sort((a, b) => a.id > b.id)
+        .sort((a, b) => a.id - b.id)
     }
   })
 }
