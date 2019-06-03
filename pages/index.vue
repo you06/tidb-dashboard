@@ -81,7 +81,7 @@ export default {
       const res = []
       for (const id in allinfo.all_servers_info) {
         const server = cloneDeep(allinfo.all_servers_info[id])
-        server.tag = id === allinfo.owner_id ? ['owner'] : []
+        server.tag = id === allinfo.owner_id ? [{ text: 'owner' }] : []
         server.ip = server.ip || '-'
         res.push(server)
       }
