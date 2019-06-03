@@ -126,37 +126,39 @@ export default {
     },
     tikvStores: state => {
       const status = state.tikv.status
-      return status.stores.map(store => {
-        const res = {
-          id: store.store.id,
-          tag: [],
-          address: store.store.address,
-          available: store.status.available,
-          capacity: store.status.capacity
-        }
-        if (store.store.state_name === 'Down') {
-          res.tag.push({
-            type: 'danger',
-            text: 'Down'
-          })
-        } else if (store.store.state_name === 'Disconnected') {
-          res.tag.push({
-            type: 'danger',
-            text: 'Disconnected'
-          })
-        } else if (store.store.state_name === 'Offline') {
-          res.tag.push({
-            type: 'disabled',
-            text: 'Offline'
-          })
-        } else if (store.store.state_name === 'Tombstone') {
-          res.tag.push({
-            type: 'disabled',
-            text: 'Tombstone'
-          })
-        }
-        return res
-      })
+      return status.stores
+        .map(store => {
+          const res = {
+            id: store.store.id,
+            tag: [],
+            address: store.store.address,
+            available: store.status.available,
+            capacity: store.status.capacity
+          }
+          if (store.store.state_name === 'Down') {
+            res.tag.push({
+              type: 'danger',
+              text: 'Down'
+            })
+          } else if (store.store.state_name === 'Disconnected') {
+            res.tag.push({
+              type: 'danger',
+              text: 'Disconnected'
+            })
+          } else if (store.store.state_name === 'Offline') {
+            res.tag.push({
+              type: 'disabled',
+              text: 'Offline'
+            })
+          } else if (store.store.state_name === 'Tombstone') {
+            res.tag.push({
+              type: 'disabled',
+              text: 'Tombstone'
+            })
+          }
+          return res
+        })
+        .sort((a, b) => a.id > b.id)
     }
   })
 }
