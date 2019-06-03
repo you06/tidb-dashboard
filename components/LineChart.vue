@@ -25,6 +25,7 @@ export default {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: false,
         scales: {
           xAxes: [
             {
