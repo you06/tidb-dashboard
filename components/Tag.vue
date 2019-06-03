@@ -10,9 +10,23 @@ export default {
       type: String,
       default: '-'
     },
-    background: {
+    type: {
       type: String,
-      default: '#2c8ebb'
+      default: 'info'
+    }
+  },
+  data() {
+    return {
+      colors: {
+        info: '#2c8ebb',
+        danger: '#d94747',
+        disabled: '#999999'
+      }
+    }
+  },
+  computed: {
+    background() {
+      return this.colors[this.type] || '#2c8ebb'
     }
   }
 }

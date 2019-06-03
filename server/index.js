@@ -30,6 +30,7 @@ async function start() {
   const dashboard = config.env.dashboard
 
   const store = new Store(cluster, cacheTime, dashboard)
+  const router = require('./http/')({ dashboard, store })
 
   // Build in development
   if (config.dev) {
@@ -39,6 +40,9 @@ async function start() {
     await nuxt.ready()
   }
 
+  app
+    .use(router.routes())
+    .use(router.allowedMethods())
   app.use(ctx => {
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling

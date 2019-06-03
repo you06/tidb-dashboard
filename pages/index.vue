@@ -99,10 +99,16 @@ export default {
           const m = cloneDeep(member)
           m.tag = []
           if (m.member_id === leader.member_id) {
-            m.tag.push('leader')
+            m.tag.push({
+              type: 'info',
+              text: 'leader'
+            })
           }
           if (m.member_id === etcdLeader.member_id) {
-            m.tag.push('etcd leader')
+            m.tag.push({
+              type: 'info',
+              text: 'etcd leader'
+            })
           }
           m.peer_urls = m.peer_urls.join(',')
           m.client_urls = m.client_urls.join(',')
@@ -121,12 +127,35 @@ export default {
     tikvStores: state => {
       const status = state.tikv.status
       return status.stores.map(store => {
-        return {
+        const res = {
           id: store.store.id,
+          tag: [],
           address: store.store.address,
           available: store.status.available,
           capacity: store.status.capacity
         }
+        if (store.state_name === 'Down') {
+          res.tag.push({
+            type: 'danger',
+            text: 'Down'
+          })
+        } else if (store.state_name === 'Disconnected') {
+          res.tag.push({
+            type: 'danger',
+            text: 'Disconnected'
+          })
+        } else if (store.state_name === 'Offline') {
+          res.tag.push({
+            type: 'disabled',
+            text: 'Offline'
+          })
+        } else if (store.state_name === 'Tombstone') {
+          res.tag.push({
+            type: 'disabled',
+            text: 'Tombstone'
+          })
+        }
+        return res
       })
     }
   })

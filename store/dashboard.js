@@ -26,5 +26,21 @@ export const mutations = {
         state.data[key].shift()
       }
     }
+  },
+  historydata(state, { key, data }) {
+    state.data[key] = data
+  }
+}
+
+export const actions = {
+  fetchHistoryData({ commit }, keys) {
+    for (const key of keys) {
+      this.$axios.get(`/api/v1/history/${key}`).then(({ data }) => {
+        commit('historydata', {
+          key,
+          data
+        })
+      })
+    }
   }
 }

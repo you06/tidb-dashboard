@@ -20,7 +20,12 @@
       >
         {{ d[key] }}
         <template v-if="ki === 0 && d['tag']">
-          <tag v-for="(t, kt) in d['tag']" :key="kt" :text="t" />
+          <tag
+            v-for="(t, kt) in d['tag']"
+            :key="kt"
+            :text="t.text"
+            :type="t.type"
+          />
         </template>
       </div>
     </div>
