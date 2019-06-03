@@ -134,22 +134,22 @@ export default {
           available: store.status.available,
           capacity: store.status.capacity
         }
-        if (store.state_name === 'Down') {
+        if (store.store.state_name === 'Down') {
           res.tag.push({
             type: 'danger',
             text: 'Down'
           })
-        } else if (store.state_name === 'Disconnected') {
+        } else if (store.store.state_name === 'Disconnected') {
           res.tag.push({
             type: 'danger',
             text: 'Disconnected'
           })
-        } else if (store.state_name === 'Offline') {
+        } else if (store.store.state_name === 'Offline') {
           res.tag.push({
             type: 'disabled',
             text: 'Offline'
           })
-        } else if (store.state_name === 'Tombstone') {
+        } else if (store.store.state_name === 'Tombstone') {
           res.tag.push({
             type: 'disabled',
             text: 'Tombstone'
